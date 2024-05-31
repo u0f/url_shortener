@@ -22,6 +22,10 @@ document.getElementById('urlForm').addEventListener('submit', async function(eve
             
             document.getElementById('shortUrl').value = '';
             document.getElementById('longUrl').value = '';    
+
+            const countElement = document.getElementById('count');
+            const count = parseInt(countElement.textContent.split(' ')[2]) + 1;
+            countElement.textContent = `URLs created: ${count}`;
         
         } else {
 
