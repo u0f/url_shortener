@@ -6,7 +6,7 @@ async function getCount() {
   
       const result = await response.json();
   
-      document.getElementById('count').textContent = `URLs created: ${result.count}`;
+      document.getElementById('count').textContent = `Total URLs created: ${result.count}`;
   
     } catch (error) {
       console.error(error);

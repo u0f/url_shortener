@@ -24,8 +24,8 @@ document.getElementById('urlForm').addEventListener('submit', async function(eve
             document.getElementById('longUrl').value = '';    
 
             const countElement = document.getElementById('count');
-            const count = parseInt(countElement.textContent.split(' ')[2]) + 1;
-            countElement.textContent = `URLs created: ${count}`;
+            const count = parseInt(countElement.textContent.split(': ')[1]) + 1;
+            countElement.textContent = `Total URLs created: ${count}`;
         
         } else {
 
@@ -35,6 +35,9 @@ document.getElementById('urlForm').addEventListener('submit', async function(eve
                         responseElement.textContent = `Error. The short URL exceeds the maximum length of 30 characters.`;
                     } else if (result.error.includes('contains a blocked domain')) {
                         responseElement.textContent = `Error. The long URL contains a blocked domain.`;
+                    
+                    } else if (result.error.includes('short URL is blocked')) {
+                        responseElement.textContent = `Error. This short URL is blocked.`;
                     } else {
                         responseElement.textContent = `Error.`;
                     }

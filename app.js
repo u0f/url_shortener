@@ -15,7 +15,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   },
   tls: true,
-  tlsAllowInvalidCertificates: true // Esto puede ser necesario dependiendo de tu entorno
+  tlsAllowInvalidCertificates: true
 });
 
 app.use(bodyParser.json());
@@ -26,6 +26,7 @@ let db, urlsCollection;
 client.connect().then(() => {
   db = client.db('url_program');
   urlsCollection = db.collection('urls');
+  totalURLsCollection = db.collection('totalURLcreated');
   console.log('Connected to MongoDB');
 }).catch(err => {
   console.error('Failed to connect to MongoDB', err);
@@ -64,6 +65,14 @@ const blockedDomains = [
   "pulpo69.com"
 ];
 
+app.get('/helloworld', (req, res) => {
+  res.send('Hello World');
+});
+
+app.get('/favicon.ico', (req, res) =>
+  res.sendFile(path.join(__dirname, 'favicon.ico'))
+);
+
 app.get('/privacy-policy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privay-policy.html'));
 });
@@ -80,9 +89,11 @@ app.get('/contact', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
+
 app.get('/count', async (req, res) => {
   try {
-    const count = await urlsCollection.countDocuments();
+    const totalURLsDocument = await totalURLsCollection.findOne({});
+    const count = totalURLsDocument ? totalURLsDocument.totalURLcreated : 0;
     res.status(200).send({ count });
   } catch (error) {
     console.error(error);
@@ -93,8 +104,14 @@ app.get('/count', async (req, res) => {
 app.post('/create', async (req, res) => {
   const { shortUrl, longUrl } = req.body;
 
+  const blockedShortUrls = ['helloworld', 'favicon.ico', 'privacy-policy', 'terms-and-condicions', 'cookie-policy', 'contact', 'count', 'create', 'admin'];
+
   if (shortUrl.length > 20) {
     return res.status(400).send({ error: 'Short URL exceeds maximum length of 20 characters' });
+  }
+
+  if (blockedShortUrls.includes(shortUrl.trim())) {
+    return res.status(400).send({ error: 'This short URL is blocked' });
   }
 
   try {
@@ -116,6 +133,7 @@ app.post('/create', async (req, res) => {
 
     const newUrl = { shortUrl, longUrl, createdAt: new Date() };
     await urlsCollection.insertOne(newUrl);
+    await totalURLsCollection.updateOne({}, { $inc: { totalURLcreated: 1 }, $set: { lastCreation: new Date() } });
     res.status(201).send({ message: 'URL created', shortUrl });
   } catch (error) {
     res.status(500).send({ error: 'Failed to create URL' });
