@@ -26,10 +26,21 @@
     <div class="container">
         <h1>URL Shortener</h1>
         <form id="urlForm">
-            <label for="shortUrl">Short URL:</label>
-            <input type="text" id="shortUrl" name="shortUrl" required>
-            <label for="longUrl">Long URL:</label>
-            <input type="url" id="longUrl" name="longUrl" required>
+            <div class="urlWrapper">
+                <label for="shortUrl">Short URL:</label>
+                <select id="shortUrlPrefix" name="shortUrlPrefix">
+                    <option value="u-s.es">u-s.es/</option>
+                </select>
+                <div class="shortUrlInput">
+                    <input type="text" id="shortUrl" name="shortUrl" required>
+                </div>
+            </div>
+            <div class="longUrlWrapper">
+                <label for="longUrl">Long URL:</label>
+                <div class="longUrlInput">
+                    <input type="url" id="longUrl" name="longUrl" required>
+                </div>
+            </div>
             <button type="submit">Create</button>
         </form>
         <div id="response"></div>
