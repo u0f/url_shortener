@@ -64,6 +64,22 @@ const blockedDomains = [
   "pulpo69.com"
 ];
 
+app.get('/privacy-policy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'privay-policy.html'));
+});
+
+app.get('/terms-and-condicions', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'terms-condicions.html'));
+});
+
+app.get('/cookie-policy', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'cookie-policy.html'));
+});
+
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
 app.get('/count', async (req, res) => {
   try {
     const count = await urlsCollection.countDocuments();
