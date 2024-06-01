@@ -89,6 +89,9 @@ app.get('/contact', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'contact.html'));
 });
 
+app.get('/404', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', '404.html'));
+});
 
 app.get('/count', async (req, res) => {
   try {
@@ -104,7 +107,7 @@ app.get('/count', async (req, res) => {
 app.post('/create', async (req, res) => {
   const { shortUrl, longUrl } = req.body;
 
-  const blockedShortUrls = ['helloworld', 'favicon.ico', 'privacy-policy', 'terms-and-condicions', 'cookie-policy', 'contact', 'count', 'create', 'admin'];
+  const blockedShortUrls = ['helloworld', 'favicon.ico', 'privacy-policy', 'terms-and-condicions', 'cookie-policy', 'contact', 'count', 'create', 'admin', '404'];
 
   if (shortUrl.length > 20) {
     return res.status(400).send({ error: 'Short URL exceeds maximum length of 20 characters' });
@@ -148,7 +151,7 @@ app.get('/:shortUrl', async (req, res) => {
     if (url) {
       res.redirect(url.longUrl);
     } else {
-      res.status(404).send('URL not found');
+      res.redirect('/404');
     }
   } catch (error) {
     res.status(500).send({ error: 'Failed to retrieve URL' });
