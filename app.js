@@ -4,6 +4,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
+const QRCode = require('qrcode');
 require('dotenv').config();
 
 const uri = process.env.MONGO_URI; 
@@ -69,6 +70,18 @@ app.get('/helloworld', (req, res) => {
   res.send('Hello World');
 });
 
+app.get('/generate-qr', async (req, res) => {
+  const text = req.query.text; // El texto para el código QR viene de la query string
+
+  try {
+      const qr = await QRCode.toDataURL(text, { scale: 10 }); // Aumenta el tamaño del código QR
+      res.status(200).send({ qr });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send({ error: 'Failed to generate QR code' });
+  }
+});
+
 app.get('/favicon.ico', (req, res) =>
   res.sendFile(path.join(__dirname, 'favicon.ico'))
 );
@@ -77,7 +90,7 @@ app.get('/privacy-policy', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'privay-policy.html'));
 });
 
-app.get('/terms-and-condicions', (req, res) => {
+app.get('/terms-and-conditions', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'terms-condicions.html'));
 });
 
@@ -92,6 +105,11 @@ app.get('/contact', (req, res) => {
 app.get('/404', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', '404.html'));
 });
+
+app.get('/qr-generator', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'qr-generator.html'));
+});
+
 
 app.get('/count', async (req, res) => {
   try {
