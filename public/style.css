@@ -116,3 +116,12 @@ nav ul li a:hover {
     width: 0;
     margin-left: 12px !important;
 }
+
+svg {
+    width: 15px;
+    height: 15px;
+}
+
+#copyButton {
+    padding: 3px !important;
+}
