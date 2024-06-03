@@ -82,34 +82,20 @@ app.get('/generate-qr', async (req, res) => {
   }
 });
 
-app.get('/favicon.ico', (req, res) =>
-  res.sendFile(path.join(__dirname, 'favicon.ico'))
-);
+const routes = [
+  { path: '/privacy-policy', file: 'privay-policy.html' },
+  { path: '/terms-and-conditions', file: 'terms-conditions.html' },
+  { path: '/cookie-policy', file: 'cookie-policy.html' },
+  { path: '/contact', file: 'contact.html' },
+  { path: '/404', file: '404.html' },
+  { path: '/qr-generator', file: 'qr-generator.html' },
+];
 
-app.get('/privacy-policy', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'privay-policy.html'));
+routes.forEach(route => {
+  app.get(route.path, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', route.file));
+  });
 });
-
-app.get('/terms-and-conditions', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'terms-condicions.html'));
-});
-
-app.get('/cookie-policy', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'cookie-policy.html'));
-});
-
-app.get('/contact', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
-});
-
-app.get('/404', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', '404.html'));
-});
-
-app.get('/qr-generator', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'qr-generator.html'));
-});
-
 
 app.get('/count', async (req, res) => {
   try {
@@ -122,22 +108,35 @@ app.get('/count', async (req, res) => {
   }
 });
 
-app.post('/create', async (req, res) => {
-  const { shortUrl, longUrl } = req.body;
+const blockedShortUrls = ['helloworld', 'favicon.ico', 'privacy-policy', 
+                          'terms-and-condicions', 'cookie-policy', 'contact', 
+                          'count', 'create', 'admin', '404',
+                          'script.js', 'script2.js', 'script3.js', 'script4.js' , 
+                          'qr-generator', 'generate-qr', 'public'
+];
 
-  const blockedShortUrls = ['helloworld', 'favicon.ico', 'privacy-policy', 'terms-and-condicions', 'cookie-policy', 'contact', 'count', 'create', 'admin', '404'];
+app.post('/create', async (req, res) => {
+  var { shortUrl, longUrl } = req.body;
+
+  //Handling possible XSS attacks + removing invisible characters
+  shortUrl = shortUrl
+  .trim()
+  .replace(/\u200B/g, "")
+  .replace(/[\x00-\x1F\x7F-\x9F]/g, '')
+  .replace(/[\u200B-\u200D\uFEFF]/g, '')
+  .replace(/&lt;|&gt;|&amp;|&quot;|&#039;/g, '');
 
   if (shortUrl.length > 20) {
     return res.status(400).send({ error: 'Short URL exceeds maximum length of 20 characters' });
   }
 
-  if (blockedShortUrls.includes(shortUrl.trim())) {
+  if (blockedShortUrls.includes(shortUrl.toLowerCase())) {
     return res.status(400).send({ error: 'This short URL is blocked' });
   }
 
   try {
     const url = new URL(longUrl);
-    const domain = url.hostname;
+    const domain = url.hostname.toLowerCase();
     
     const isBlocked = blockedDomains.some(blockedDomain => {
       return domain === blockedDomain || domain.endsWith(`.${blockedDomain}`);
@@ -157,10 +156,13 @@ app.post('/create', async (req, res) => {
     await totalURLsCollection.updateOne({}, { $inc: { totalURLcreated: 1 }, $set: { lastCreation: new Date() } });
     res.status(201).send({ message: 'URL created', shortUrl });
   } catch (error) {
-    res.status(500).send({ error: 'Failed to create URL' });
+    if (error instanceof TypeError) {
+      res.status(400).send({ error: 'Invalid URL' });
+    } else {
+      res.status(500).send({ error: 'Failed to create URL' });
+    }
   }
 });
-
 
 app.get('/:shortUrl', async (req, res) => {
   const { shortUrl } = req.params;
