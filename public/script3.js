@@ -3,6 +3,13 @@ document.getElementById('qrForm').addEventListener('submit', function(event) {
 
     const text = document.getElementById('url').value;
 
+    // Check if the text is a valid URL
+    try {
+        new URL(text);
+    } catch (_) {
+        return alert('Please enter a valid URL.');
+    }
+
     fetch(`/generate-qr?text=${encodeURIComponent(text)}`)
         .then(response => response.json())
         .then(data => {
