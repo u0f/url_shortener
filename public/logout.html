@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" style="position: relative; min-height: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <link rel="icon" href="/favicon.ico">
+</head>
+
+<body>
+    <script>
+        window.onload = function () {
+            fetch('/lout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        window.location.href = '/';
+                    } else {
+                        console.error('Failed to logout:', response.statusText);
+                        document.body.innerHTML = '<h1>Error al cerrar sesión. Por favor, inténtelo de nuevo más tarde.</h1>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.body.innerHTML = '<h1>Error al cerrar sesión. Por favor, inténtelo de nuevo más tarde.</h1>';
+                });
+        };
+    </script>
+</body>
+
+</html>

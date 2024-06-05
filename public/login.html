@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Policy</title>
+    <title>Login</title>
     <link rel="icon" href="/favicon.ico">
 
     <!-- Bootstrap -->
@@ -57,24 +57,6 @@
                 </li>
             </ul>
             <div class="navbar-nav ms-auto">
-                <div class="dropdown" style="margin-right: 10px;">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg id="svg_persona" width="32px" height="32px" viewBox="0 0 32 32"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
-                        </svg>
-                        <a id="username_a"></a>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li style="display: none;"><a class="dropdown-item" href="/url_list">Shortened URLs list</a>
-                        </li>
-                        <li style="display: none;"><a class="dropdown-item" href="/login">Login</a></li>
-                        <li style="display: none;"><a class="dropdown-item" href="/register">Register</a></li>
-                        <li style="display: none;"><a class="dropdown-item" href="/logout">Logout</a></li>
-                    </ul>
-                </div>
                 <div class="form-check form-switch" style="margin-right: 5px;">
                     <input class="form-check-input" type="checkbox" id="themeToggle">
                     <label class="form-check-label" for="themeToggle">Dark Mode</label>
@@ -84,26 +66,19 @@
     </nav>
 
     <div class="container mt-4">
-        <h1>Cookie Policy</h1>
-        <p>This Cookie Policy explains how we use cookies and similar technologies on our website.</p>
-
-        <h2>1. Use of Cookies</h2>
-        <p>We may use cookies and similar technologies to enhance user experience, collect anonymous usage data, and
-            remember your theme preferences, such as dark mode.</p>
-
-        <h2>2. Types of Cookies Used</h2>
-        <ul class="list-unstyled">
-            <li><strong>Essential Cookies:</strong> Necessary for the basic functionality of the application, including
-                remembering your theme preferences.</li>
-            <li><strong>Performance Cookies:</strong> Collect information on how users interact with our application to
-                improve it.</li>
-        </ul>
-
-        <h2>3. Managing Cookies</h2>
-        <p>Users can manage cookie preferences, including theme preferences, through their browser settings.</p>
-
-        <h2>4. Changes to the Cookie Policy</h2>
-        <p>We may update our Cookie Policy from time to time and will notify users of any significant changes.</p>
+        <h1 class="mb-4">Login</h1>
+        <form id="loginForm" method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password:</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <div id="response" class="mt-4"></div>
     </div>
 
     <footer class="footer mt-auto py-3" style="position: absolute; bottom: 0; width: 100%; height: 60px">
@@ -114,9 +89,8 @@
             <br>
         </div>
     </footer>
-
 </body>
+<script src="script6.js"></script>
 <script src="script4.js"></script>
-<script src="script7.js"></script>
 
 </html>

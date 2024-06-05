@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Policy</title>
+    <title>URL List</title>
     <link rel="icon" href="/favicon.ico">
 
     <!-- Bootstrap -->
@@ -19,6 +19,18 @@
         html[data-bs-theme="dark"] .navbar,
         html[data-bs-theme="dark"] .footer {
             background-color: rgb(23, 25, 29) !important;
+        }
+
+        html[data-bs-theme="dark"] #svg {
+            fill: white !important;
+        }
+
+        html[data-bs-theme="light"] #svg {
+            fill: black !important;
+        }
+
+        html[data-bs-theme="dark"] .form-check-label {
+            color: white !important;
         }
 
         html[data-bs-theme="light"] .navbar,
@@ -84,28 +96,12 @@
     </nav>
 
     <div class="container mt-4">
-        <h1>Cookie Policy</h1>
-        <p>This Cookie Policy explains how we use cookies and similar technologies on our website.</p>
+        <h1 class="mb-4">URL List</h1>
 
-        <h2>1. Use of Cookies</h2>
-        <p>We may use cookies and similar technologies to enhance user experience, collect anonymous usage data, and
-            remember your theme preferences, such as dark mode.</p>
-
-        <h2>2. Types of Cookies Used</h2>
-        <ul class="list-unstyled">
-            <li><strong>Essential Cookies:</strong> Necessary for the basic functionality of the application, including
-                remembering your theme preferences.</li>
-            <li><strong>Performance Cookies:</strong> Collect information on how users interact with our application to
-                improve it.</li>
-        </ul>
-
-        <h2>3. Managing Cookies</h2>
-        <p>Users can manage cookie preferences, including theme preferences, through their browser settings.</p>
-
-        <h2>4. Changes to the Cookie Policy</h2>
-        <p>We may update our Cookie Policy from time to time and will notify users of any significant changes.</p>
+        <div id="div_lista"></div>
     </div>
 
+    <p id="count" class="text-center mt-4" style="position: absolute; right: 0; bottom: 60px; margin-right: 20px;"></p>
     <footer class="footer mt-auto py-3" style="position: absolute; bottom: 0; width: 100%; height: 60px">
         <div class="footer_a container text-center text-white">
             <a href="/privacy-policy" class="text-muted mr-3">Privacy Policy</a>
@@ -114,9 +110,9 @@
             <br>
         </div>
     </footer>
-
 </body>
 <script src="script4.js"></script>
 <script src="script7.js"></script>
+<script src="script8.js"></script>
 
 </html>

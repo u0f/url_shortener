@@ -49,7 +49,7 @@
         </button>
         <div style="margin-left: 7px;" class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="/qr-generator">QR Generator</a>
                 </li>
                 <li class="nav-item">
@@ -57,6 +57,24 @@
                 </li>
             </ul>
             <div class="navbar-nav ms-auto">
+                <div class="dropdown" style="margin-right: 10px;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg id="svg_persona" width="32px" height="32px" viewBox="0 0 32 32"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16 15.503A5.041 5.041 0 1 0 16 5.42a5.041 5.041 0 0 0 0 10.083zm0 2.215c-6.703 0-11 3.699-11 5.5v3.363h22v-3.363c0-2.178-4.068-5.5-11-5.5z" />
+                        </svg>
+                        <a id="username_a"></a>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li style="display: none;"><a class="dropdown-item" href="/url_list">Shortened URLs list</a>
+                        </li>
+                        <li style="display: none;"><a class="dropdown-item" href="/login">Login</a></li>
+                        <li style="display: none;"><a class="dropdown-item" href="/register">Register</a></li>
+                        <li style="display: none;"><a class="dropdown-item" href="/logout">Logout</a></li>
+                    </ul>
+                </div>
                 <div class="form-check form-switch" style="margin-right: 5px;">
                     <input class="form-check-input" type="checkbox" id="themeToggle">
                     <label class="form-check-label" for="themeToggle">Dark Mode</label>
@@ -71,16 +89,20 @@
             shortening service.</p>
 
         <h2>1. Information We Collect</h2>
-        <p>We only collect the following information when you use our service:</p>
+        <p>We collect the following information when you use our service:</p>
         <ul class="list-unstyled">
             <li><strong>The short URL:</strong> The shortened URL created by you.</li>
             <li><strong>The Long URL:</strong> The original URL that you provide for shortening.</li>
             <li><strong>Create time:</strong> The date and time when the URL was created.</li>
+            <li><strong>User Information:</strong> If you are logged in, we store your username. If you are not logged
+                in, we store "Guest".</li>
+            <li><strong>Registration and Session Data:</strong> We store data related to your registration and sessions.
+            </li>
         </ul>
 
         <h2>2. Use of Information</h2>
-        <p>The information we collect is used solely for the purpose of providing and improving our URL shortening
-            service.</p>
+        <p>The information we collect is used for the purpose of providing and improving our URL shortening
+            service, and for managing user registrations and sessions.</p>
 
         <h2>3. Sharing Information</h2>
         <p>We do not share your personal information with third parties, except as necessary to comply with the law or
@@ -90,8 +112,8 @@
         <p>We use industry-standard security measures to protect the information stored in our database.</p>
 
         <h2>5. User Rights</h2>
-        <p>Since no URL shortening is directly linked to any individual, deletions of shortened URLs can only be
-            requested if they violate our site's policies or if the destination page causes harm. Users must provide
+        <p>Users have the right to request deletion of shortened URLs that violate our site's policies or if the
+            destination page causes harm. Users must provide
             proof that the URL points to them personally to request deletion under these conditions. To exercise these
             rights, please contact us through the details provided on our contact page.</p>
 
@@ -110,5 +132,6 @@
     </footer>
 </body>
 <script src="script4.js"></script>
+<script src="script7.js"></script>
 
 </html>
